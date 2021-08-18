@@ -1,0 +1,239 @@
+folder structure
+axios, express , react router dom react router cookie parser cors nodemon and other dependencies
+server.js setup app.use wagerah, port listen , env pe monodb url after creating cluster and linking with application
+connected to db
+then Pagerender.js ka magic with react router dom Browser router and route switch exact path component 
+: to use useparams rendering page component login and register ko render kraya useparams se mast nikaal k 
+ek id bhi dedi for future
+
+Step2.
+Authentication used jwt and bcrypt alog with postman to refresh token access token visibility
+created userSchema with different options having followers and following lists in place
+generate access token and create access token wagerah krke /api/refresh_token and /api/login ko use kiye bas
+
+Step3.Redux login
+applymiddleware combineReducers using types action, reducer and store, dispatch fetching data from axios in fetchData.js in util and using them as postDataAPI in login part
+
+step4> Using refresh token to login user inorder to display homepage once logged in and using toasts to show various kinds of alert
+
+step5: register part valid.js in util and then dispatch scene in authAction
+
+step6: Implememt search feature with userCtrl and then get from getDataAPI and in server.js also use the users imported as to show styled version of it, header.css added responsiveness too
+
+step7: UserCard implemented with styles to have user on board also responsiveness added for the app
+
+step8: Profile Editing part 1 done with styling follow button for other users, edit profile for self
+
+Step9: userCtrl update user and then router.patch in userRouter then onSubmit of form updateProfileUser in handleSubmit
+profileaction updateProfileUsers
+
+step10: follow and unfollow operation using push and pull in db, patchDataApi, EditData and DeleteData implementd router and populate followers following in order to get their details
+every function implemented to tackle undefined error when one user followed soneone and then that someone followed back again when there's no check for user id, it will again call for following the same person resulting in error,
+prevented that by checking in getuser function using every function
+
+step11: Status update, globaltypes has Status and then statusReducer then combineReducer in index.js
+
+step12: Applied camera capture using handle stream and handle capture along with canvas ctx and draw and post file was also implemented
+Step15: PostModel.js for displaying posts later, schema and model exported
+
+postModel.js comment model for refs---> postCtrl.js---->postRouter.js --> app.use in server.js---> POSTaCTION ---. POSTaCTION---> dispatch using postDataApi and then
+---->PostReducer. 
+zest is that postAction mein createpost se newPost dispatch kiya, postReducer mein newPost array mein posts add krdiya
+
+step16: getPosts with postCtrl,postAction,postReducer etc
+step17: All carousel and other functionalities related to cardheader, card footer and card body implemented as got from postReducer
+
+step18: like post ---> Like card and passed islike like unlike functionality along with conditional rendering and now likePost functionality using function
+postAction: likePost ---> id is there inside liked array after liking,
+--->postCtrl mein findOneAndUpdate push likes new true ---> postRouter .patch ---> mongodb
+
+Fix: MODAL setup. Global types has MODAL ---> modalReducer.js
+
+step19: Comments: CommentModel: commentSchema -->commentCtrl.js: trycatch:save ---> commentRouter.js: .post:commentCtrl.createComment ---> server: app.use(require('./routes)) -->clientside: home--->Posts.js
+--->inputComment.js after taking all cardfooter etc in postCard, dispatched createComment in inputComment.js ---> make createComment in commentAction.js ---> import it in InputComment and there we have dispatched createComment already
+--->commentAction, c.log(post,newComment,authRedu) was already there , now const newPost mein add comment, c.log again with newPost.
+--->dispatch to redux state comment get updated in newPost in redux state as well as comment count increases--->trycatch with postId,content,tag,reply as in commentCtrl to update in db as well using postDataAPI
+---> populate again path: "comments" populate deep --> <Comment />
+
+step 20: Comment display with hidecontent and showContent if  length > 100
+moment for displaying time
+also likes and reply on comment portion started also all the css done of comment part along with dropdown item positions n all
+step 21: Edit and like comment process started
+--->setOnEdit in Comment card passed to comment menu, accessed here onClick--->commentCard in div of flex-fill ---> cancel handled easily, update dispatched in handleUpdate---> commentAction: updateComment ---> import updateComment in CommentCard and work inside updateComment of commentAction
+--->dispatched as POST_TYPES UPDATEPOST and Payload: newPost, now it is in redux store baba
+--->trycatch to update in db and show on screen permanently: for that go to controllers: commentCtrl: ---> updateComment here ---> commentRouter: router.patch
+--->patchDataAPI import in commentAction and patchDataAPI in try catch section
+---> Update of another user can be done here with making state true in components in developer model
+---> so const cm inside commentCtrl id(!cm) WRONG, tried but waise bhi work krta hai toh htadiya yesab
+
+---
+DONE 
+---> Show only 2 comments and hide extra comments, hide and show more
+--->handleLike and unlike of a comment started: CommentCard: loadLike,setLoadLike ---> likeComment dispatched, create that likeComment inside commentAction
+---> commentAction se comment liked and then dispatched inOrder to increase count too
+---> Inside CommentCard if like.Id === auth.user._id setIsLike(true), this lead to without refresh message, discover and all like remains there, after refreshing it's gone
+---> for that we will try catch and try to update like in db inorder to show it permanently---> commentAction
+SIMILARLY UNLIKE comment we import DeleteData here in commentAction and do the needful
+--->FOR TRY CATCH IN commentAction first go to controller commentCtrl
+--->Router to patch commentRouter like and unlike ---> commentAction try complete with patchDataApi and done
+
+Step 22: Reply comment: handleReply onClick and commentCard mein commentID passed also InputComment imported and conditionally rendered 
+---> also onReply and setOnReply sent to inputComment now
+---> displayed and pl-4 wagerah krke done, now move to remove comment option
+--->dispatch handleRemove mein post ka iss authReducer ka ye comment deleteComment ---> commentAction mein deleteComment---> dispatch krke trycatch k liye phle goto commentCtrl: deleteComment
+--->fixesin commentSchema for postUserId and potId, controller mein trycatch k andar or operator se findOneAndDelete krdiya --->commentRouter mein .delete and then commentAction
+
+step 23: Detail the post in profile section, postCtrl: getUserPosts--->postRouter:get user_posts
+--->info.js remove dispatch from info and put it in [id].js 
+---> for that inside profile action getProfileUsers modified similaryly in postReducer ids inside initialState
+---> inside profileReducer fetched posts and users and dispatched too after GetId in profilereducer getPosts too started
+---> woek on <Posts /> started [id] mein conditionally rendered
+---> liked by and commented by details etcetra create a new Folder post inside pages for this, new file [id] 
+---> getPost in postaction ---> detailpostReducer in reducer---> To complete getPost in postAction, first getPost in controller postCtrl with populate ---> postRouter mein .get(auth, postCtrl.getPost)---> try part in postAction getPost
+****DiscoverLOADMORE
+---> class APIfeature introduced inside postCtrl , now getting used inside getPosts, features nikaalke sorted, getUserPosts: same find inside class
+---> getPostsDiscover implemented with $nin i.e not in operator ---> postRouter: get
+---> client discover.js,
+--->action: discoverAction : DISCOVER_TYPES, getDiscoverPosts with getDataAPI 
+--->reducer: discoverReducer wth initial states, now move to index.js to combineReducers
+---> discover.js import action and LoadMore btn implemeneted, all the functionalites under handleLoadMore in LoadMoreBtn limit and all handled gracefully
+
+***DELETE POST***
+---> postCtrl: tryCatch, deletepost and delete comment ---> router /post/id : delete() attached with router along with deletePost
+---> post_card: CardHeader, handleDeletePost: dispatch(deletePost({post, authReducer})) ---> action: deletePost defined and DELETE_POST type defined dispatched and to be to Used in reducer
+--->postReducer: DeleteData under switchcase DELETE_POST
+---> postAction deletePost: tryCatch mein deleteDataAPI usekrenge cradheader mein after dispatch homepage pushed
+---> copyLink started ---> handleCopyLink navigator.write() ---> utils: config.js
+---> window.navigator.writeText and window.navigator.confirm applied gracefully
+---> Work on send started, react-share library imported, working on ShareModal
+*Suggestions On right side bar*
+--->userCtrl suggestionsUser aggregate lookup used --> userRouter: .get /suggestionusers
+---> home.js right side bar, work on rightsidebar started
+---> action: suggestionAction.js, trycatch on getDataAPI from 'suggestionsUser'
+---> reducer: suggestionsReducer.js switchcase applied, index.js reducer fitted
+---> reducer has loading and now GET_USERS dispatched from action will be taken care of in reducer
+
+*SAVE POST*
+
+---> cardfooter saved setSaved and dispatch savePost Onclick accordingly: define savePost in action, 
+--->useEffect mein saved inside cardfooter
+---> userModel add saved array ---> savePost inside postCtrl
+---> postRouter savePost/:id 
+---> postAction trycatch
+--->unSave post, postCtrl: unsavePost: pull ---> postRouter
+--->getSavedPosts Started in postCtrl ---> postRouter: router.get(getSavedPosts)---> Saved.js useEffect: getDataAPI
+---LoadMoreBtn succesfully implemented with limits
+
+*Realtime work getting started with socket.io*
+---> installed socket.io in server package.json and socket.to-client inside client's package.json
+---> socket setup inside server.js by createServer and on and listening with http
+---> client setup in app.js, io imported and called inside useEffect
+--->globaltypes: SOCKET
+--->socketReducer, initially empty array,---> dispatched from app.js as socket as payload
+---> server.js:  ---> new file inside src: SocketClient.js---> socketServer.js inside main folder
+--->SocketClient: ---> imported inside App.js and used inside main div
+---> SocketServer exported and imported inside server.js io.on mein called with sockwet amd that socket used inside SocketServer along with users[]
+---> SocketClient: emit ---> SocketServer: on
+MAKE LIKES Realtime now: postAction mein pass socketReducer inside likePost, import socketReducer inside cardFooter and then dispatch accordingly in useEffect
+--->emit inside likePost and then move to socketServer for likes wala part, populate followers inside postCtrl inorder to get that inside newPost and then we can increase the count accordingly
+---> socket.emit after getting client inside socketServer: ---> socketClient and same emitting inside likePost as well as unlikePost
+---> createcomment under socket too insideCommentAction---> inputComment.js:dispatchedhere by adding socketReducer--->createCommentToClient:SocketClient.js
+--->deleteComment getting realtime: deleteComment--->CommentMenu dispatched added socketReducer
+--->followers showing realtime: --->FollowBtn.js: dispatched inside follow and unfollow---> profileAction:follow emitted--->SocketServer
+
+
+*Notifications started*
+models: notifyModel.js: Schema generated ---> controllers:createNotify inside notifyCtrl, get params from req.body, create a new object with those params and await save 
+Router: notifyRouter.js, require Express here with .Router to route within different links, start using get,post,patch etc, export the router and mention it in server.js
+--->server.js: app.use
+-->postAction, createPost: //Notify created a msg, and dispatched createNotify---> postCtrl, res.json modified and now --->statusModal: handleSubmit
+--->notifyAction.js: createNotify being built: tryCatch with postDataAPI and globaltypes, postDataAPI will create Notification schema in db now hopefully YES!
+---> postAction: deletePost mein bhi msg and then postCtrl:deletePost, res.json modified---> deletePost in postAction--> notifyCtrl removeNotify
+--->notifyRouter .delete : Now after removing or adding post notifies collection in db updates
+* GET NOTIFIED *
+notifyCtrl.js ---> notifyRouter---> notifyAction: create NOTIFY_TYPES, and getNotifies ---> notifyReducer: types imported and then index.js combined the reducer---> App.js: getNotifies imported and dispatched inside useEffect
+---> Nove header: Menu.js : added Li and NotifyModal
+
+*Realtime notify*
+socket Inside createNotify emitted ...notify was the one we saved as await earlier---> socketServer--->socketClient--->notifyReducer:CREATE_NOTIFY
+--->removeNotify emitted --> CardHeader: socketReducer paassed inside handleDeletepost --->postAction: delete post: already dispatched, see updateProfileUser
+---> socketServer---> socketClient---> notifyAction, define type REMOVE_NOTIFY--->notifyReducer: case REMOVE_NOTIFY, socketClient: dispatch, REMOVE_NOTIFY
+--->likePost inside msg changed to liked your post
+--->unlikePost pe kaam chaalu
+---> comment pe kaam chaalu: commentAction
+--->followed pe kaam chaalu: profileAction
+
+
+*Delete All notifies*
+---> notifyCtrl: isRead, deleteAllNotifies
+--->router: notifyRouter ---> src: NotifyModal: onClick and dispatched---> notifyAction: UPDATE_NOTIFY
+---> reducer: UPDATE_NOTIFY case ----> action: isReadNotify: tryCatch: patchDataAPI hmeshak liye true krdiya, rarlier dispatch makes it look like on screen but onRefresh it falls apart
+---> NotifyModal: handleSound: dispatch type: UPDATE_SOUND and ---> reducer: case of NotifyTypes: update sound
+---> notifications on laptop or phone using notification api for javascript, function from mdn and paste that in app.js inside useEffect---> socketClient.js: spawnNotification and put it in useEffect of notification below
+---> adding audio in return socketClient
+---> hahaha now we will be working upon delete all, NotifyModal: DeleteAll, on Click and handleDeleteAll : dispatched deleteAllNotifies ---> notifyAction deleteAllNotifies---> reducer: notifyReducer: DELETE_ALL_NOTIFIES wala case
+--->router pe already deleteAllNotifies hai ussi ko deleteDataAPI se call
+
+*MESSAGE started*
+
+html css and message folder inside pages as well as component
+---> search option copied from previously search.js inside header--> handleSearch dispatched addUser now
+--->action: messageAction.js: TYpes and addUser---> reducer
+
+
+*post videos and icons*
+
+--->StatusModal: imageShow and video show changed---> imgUpload /image removed from url
+---> Icons.js in components done and played with theme fixes
+
+*Add message*
+chat css enhancement
+---> addMessage dispatched in form handleSubmit, now action types: ADD_MESSAGES--->reducer case of ADD_MESSAGES
+
+
+*Get messages*
+Model: conversationModel.js---> messageModel.js ----> Controllers: messageCtrl.js: createMessage: newConversation, newMessage save newMessage with newConversation._id as conversation and then res.json newConversation. new:true return modified document and upsert:true return modified or if doesn't find any query makes a new document then returns
+Router: messageRouter.js: .post ---> Server.js: app.use ---> messageAction: addMessage: trycatch so that message gets added now inside db
+--->adding msg such that other person receives it too: bring classAPI features from postCtrl to messageCtrl: getConversations: ---> router:
+--->LeftSide.js: useEffect: dispatch getConversations from action not controller, action is waht is dispatched to show on screen by going through the defined routes, the one we use in controller is used to permanently get it from db
+--->messageAction: dispatched after trycatch newArr as payload,---> reducer: case GET_CONVERSATIONS: abhitak leftSide mein getConversation aagya permanently
+--->now getMessages: inside msgCtrl:---> router /message .get ---> RightSide.js: useEffect: getMessagesData from dispatched getMessages--->Action: getMessages: console tak aagya ab action mein GET_MESSAGES krke onscreen laana hai---> reducer: case of GET_MESSAGES
+
+*RealTime Messaging started*
+
+messageAction: socket.emit in addMessage---> socketServer--->socketClient
+useRef for chatDisplay to be smooth and slider at end also at handleSubmit
+
+*Delete message*
+
+onClick in RightSide:dispatched: deleteMessages with msg and data ---> messageAction:TYpe:DELETE_MESSAGEE: and deleteMessages defined ---> dispatched payload from there to reducer case: DELETE_MESSAGES
+--->abhitak screen pe deleteion horha mast but for permanent use axios now
+--->deleteMsh indide messageCtrl ---> messageRouter ---> Action for showing permanently deleted and deleting by going through that route defined inside router trycatch using deleteDataAPI
+
+*Online Offline*
+--->DeleteConversation fix: messageAction got id and authReducer to delete, then reducer for case and use payload and change state inside store 
+---> anhitak temporarily oon screen dikhrha but after refreshing it'll vanish so try and catch to permanently delete from db too inside messageAction but first go to messageCtrl and router to generate path so that action performed on ui will do it in backend too
+
+ //check user online or offline
+ Inside Global types DEFINE TYPES, ---> onlineReducer payload passe samrtly and checked inside add user too, if following we will be showing online or offline
+
+ *Call Modal*
+ callModal work done
+
+ *Call realtime*
+ peer inside main and peerjs inside client installed
+ setup peerServer inside server.js and peerjs inside app.js ---> globalTypes: PEER---> peerReducer---> dispatched newPeer inside app.js, now we have id _open etc inside state---> RightSide: callUser
+ socket emitted and callUser called inside audio and video call---> socketServer---> socketClient
+smartly added call and endCall also hadled smartly
+*StreamCAll*
+
+peerdocumentation
+
+*END CALL*
+messagectrl: get sender
+
+
+Define a globalType file, make action and reducer folder, import different types from global types inside action files, import fetchdata
+dispatch inside trycatch
+
+
