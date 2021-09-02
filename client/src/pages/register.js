@@ -43,7 +43,7 @@ const Register = () => {
     }
     return (
         <div className="auth_page">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} style={{zIndex:'2'}}>
                 <h3 className="text-uppercase text-center mb-4">Social Media</h3>
                 
                 <div className="form-group">
